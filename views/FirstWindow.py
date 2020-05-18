@@ -6,6 +6,7 @@ from views.ViewConf import ViewConf
 import sys
 import qtawesome
 from views.ProductManage import ProductManage
+from views.CategoryManage import CategoryManage
 
 
 
@@ -76,10 +77,18 @@ class MainUi(QtWidgets.QMainWindow):
         # 商品管理模块
         self.productButton = QtWidgets.QPushButton(qtawesome.icon('fa.music', color='white'), "商品管理")
         self.productButton.setObjectName('left_button')
+        self.productManage = ProductManage()
+        self.right_layout.addWidget(self.productManage)
         self.productButton.clicked.connect(self.setRightProductManage)
 
-        self.left_button_2 = QtWidgets.QPushButton(qtawesome.icon('fa.sellsy', color='white'), "商品类别")
-        self.left_button_2.setObjectName('left_button')
+        # 商品分类模块
+        self.categoryButton = QtWidgets.QPushButton(qtawesome.icon('fa.sellsy', color='white'), "商品类别")
+        self.categoryButton.setObjectName('left_button')
+        self.categoryManage = CategoryManage()
+        self.right_layout.addWidget(self.categoryManage)
+        self.categoryButton.clicked.connect(self.setRightCategoryManage)
+
+
         self.left_button_3 = QtWidgets.QPushButton(qtawesome.icon('fa.film', color='white'), "客户信息")
         self.left_button_3.setObjectName('left_button')
 
@@ -103,7 +112,7 @@ class MainUi(QtWidgets.QMainWindow):
 
         self.left_layout.addWidget(self.left_label_1, 1, 0, 1, 3)
         self.left_layout.addWidget(self.productButton, 2, 0, 1, 3)
-        self.left_layout.addWidget(self.left_button_2, 3, 0, 1, 3)
+        self.left_layout.addWidget(self.categoryButton, 3, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_3, 4, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_1_4, 5, 0, 1, 3)
 
@@ -135,10 +144,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_layout.addWidget(self.left_visit, 0, 1, 1, 1)
 
     def setRightProductManage(self):
-        self.managerLable = QtWidgets.QLabel("商品管理")
-        self.managerLable.setObjectName('managerLable')
-        self.productManage = ProductManage()
-        self.right_layout.addWidget(self.productManage)
+        self.right_layout.setCurrentIndex(0)
+
+    def setRightCategoryManage(self):
+        self.right_layout.setCurrentIndex(1)
+
 
     def setMusicView(self):
         self.right_newsong_lable = QtWidgets.QLabel("最新歌曲")
@@ -278,7 +288,7 @@ class MainUi(QtWidgets.QMainWindow):
           }
         ''')
 
-        self.setWindowOpacity(0.9)  # 设置窗口透明度
+        # self.setWindowOpacity(0.9)  # 设置窗口透明度
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)  # 隐藏边框
